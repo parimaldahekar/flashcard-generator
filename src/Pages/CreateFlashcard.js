@@ -6,8 +6,8 @@ import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { PencilAltIcon, TrashIcon } from "@heroicons/react/outline";
 import { useDispatch } from "react-redux";
 import { setFlashCard } from "../State/reducers";
+import { toast } from 'react-toastify'
 import "../App.css";
-
 
 const CreateFlashCard = ({ theme }) => {
   const dispatch = useDispatch();
@@ -29,11 +29,12 @@ const CreateFlashCard = ({ theme }) => {
     actions.resetForm();
     setGroupImg("");
     setCardImg("");
+    toast.success("Flashcard created successfully")
   };
 
   const handleImage = (index) => {
     const values = Object.values(cardImg)
-    const filter = values.splice(index, 1)
+    // const filter = values.splice(index, 1)
     if (index > 0) setCardImg(values)
   }
   return (
@@ -54,7 +55,7 @@ const CreateFlashCard = ({ theme }) => {
         ],
         createOn: new Date(Date.now()).toLocaleString(),
       }}
-      validationFlashCardSchema={FlashCardSchema}
+      validationSchema={FlashCardSchema}
       onSubmit={addFlashCard}
     >
       {({ values, isSubmitting, setFieldValue }) => (
@@ -68,11 +69,11 @@ const CreateFlashCard = ({ theme }) => {
               } shadow-sm shadow-white space-y-4 rounded-md border-2 `}
           >
             {/* LEFT */}
-            <div className="flex flex-col sm:flex-row  lg:space-x-10 pt-3">
-              <div className="flex flex-col relative">
-                <h2>
-                  Create Group {"*"}
-                </h2>
+            <div className={`flex flex-col sm:flex-row  lg:space-x-10 pt-3`}>
+              <div className={`flex flex-col relative`}>
+              <h2>
+              Create Group {"*"}
+            </h2>
                 {/*FEATURE TO SHOW THE SELECTED GROUP IMAGE */}
                 {values.groupimg ? (
                   <div className="flex items-center space-x-3  my-5">
@@ -116,8 +117,8 @@ const CreateFlashCard = ({ theme }) => {
                   }}
                   className={`flex items-center px-5 py-2 mt-6 item-center md:ml-1.5 sm:ml-1.5 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}
                 >
-                  <UploadOutlined className={`flex items-center`}/> 
-                  <span>Upload Image</span>
+                <UploadOutlined className={`flex items-center`} />
+                <span className={`text-sm sm:text-base`}>Upload Image</span>
                   <input
                     type="file"
                     ref={filePicker}
@@ -157,7 +158,8 @@ const CreateFlashCard = ({ theme }) => {
           </div>
 
           {/* CARDS SECTION  */}
-          <div className={`text-black drop-shadow-lg rounded-lg bg-${theme === "dark" ? 'dark' : 'white'} border-2 p-5 rounded-md mt-4  overflow-hidden`} >
+          <div className={`flex flex-col p-1 bg-${theme === "dark" ? "dark" : "white"
+        } shadow-sm shadow-white space-y-4 rounded-md  `} >
             {/* FieldArray component from Formik which will create Dynamic Form for the custom input */}
 
             <FieldArray name="cards">
@@ -168,18 +170,17 @@ const CreateFlashCard = ({ theme }) => {
                     {cards && cards.length > 0
                       ? cards.map((card, index) => (
                         <div
-                          className={`flex items-center space-x-10 border-2  px-5 lg:px-10 py-1 md:flex md:space-x-10 md:items-center relative flex-nowrap mb-2`}
-                          key={index}
+                        className={`flex flex-col px-10 py-3 bg-${theme === "dark" ? "dark" : "white"
+                      } shadow-sm shadow-white space-y-4 rounded-md `}
+                        key={index}
                         >
-                          <div className=" rounded text-white p-2 w-9 h-9 flex items-center justify-center bg-red-600 text-white text-md font-semibold">
-                            {index + 1}
-                          </div>
+                        
 
-                          <div className="flex flex-col flex items-center pb-5  md:space-x-9 md:flex-row ">
-                            <div className={`text-${theme === "dark" ? "white" : "black"} relative flex flex-col space-y-3 align-middle justify-center`}>
+                      <div className={`flex flex-col sm:flex-row  lg:space-x-10 pt-3`}>
+                      <div className={`flex flex-col relative mb-5`}>
                               <h2>
                                 Enter Term {"*"}
-                               
+                              
                               </h2>
                               {/* INPUT FIELD TO CARDS TERM */}
                               <Field
@@ -187,24 +188,24 @@ const CreateFlashCard = ({ theme }) => {
                                 name={`cards.${index}.cardname`}
                                 innerRef={addRef}
                                 autoFocus
-                                className="border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-72 sm:w-64   w-44   bg-gray-50 border  text-gray-900 text-xl"
+                                className={`border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-72 bg-gray-50 border  text-gray-900 text-sm `}
                               />{" "}
                               <ErrorMessage
                                 component={"div"}
-                                className="text-sm text-red-500"
+                                className="text-sm text-red-500 mb-2"
                                 name={`cards.${index}.cardname`}
                               />
                             </div>
-                            <div className={`text-${theme === "dark" ? "white" : "black"} relative flex flex-col justify-center space-y-4 align-middle`}>
+                            <div className={`flex flex-col relative mb-5`}>
                               <h2>
                                 Enter Definition {"*"}
-                                
+                             
                               </h2>
                               {/*INPUT FIELD TO CARD DESCRIPTION */}
                               <Field
                                 as="textarea"
                                 name={`cards.${index}.carddescription`}
-                                className="resize-none  border-slate-400 h-11 rounded-md focus:h-24 p-2 lg:w-72 md:w-72 sm:w-64 w-44 transition-all ease-in-out bg-gray-50 border duration-500  text-gray-900 text-sm "
+                                className="border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-72   bg-gray-50 border  text-gray-900 text-sm "
                               />{" "}
                               <ErrorMessage
                                 component={"div"}
@@ -213,14 +214,15 @@ const CreateFlashCard = ({ theme }) => {
                               />
                             </div>
 
-                            <div className="flex items-center space-x-2  mt-8">
-                              {/* BUTTON TO SELECT THE IMAGE FOR CARDS */}
+                            {/* BUTTON TO SELECT THE IMAGE FOR CARDS */}
+
+                            <div className="flex items-center  ">
 
                               {cardImg && cardImg[index] ? (
-                                <div className="md:flex  space-x-4 space-y-4 my-6 ">
-                                  <div className="w-full relative min-w-[150px] min-h-[150px]  max-w-[200px] max-h-[150px] p-2   flex hover:border-slate-400 ">
+                                <div className="md:flex ">
+                                  <div className={`w-full relative min-w-[150px] min-h-[150px]  max-w-[200px] max-h-[150px]  flex hover:border-slate-400 `}>
 
-                                    <label className="mt-5">
+                                    <label className="mt-0">
                                       <img
                                         src={values.cards[index].cardimg}
                                         alt=""
@@ -242,10 +244,9 @@ const CreateFlashCard = ({ theme }) => {
                                     filePickerForCard?.current?.click();
                                   }}
                                   name={`cards[${index}].cardimg`}
-                                  className={` flex items-center px-1 py-1 mt-3  bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-72  `}
+                                  className={` p-1 mt-0 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-72  `}
                                 >
-                                  <PlusOutlined className={`flex items-center ml-1 `} />
-                                  <span >Select Image</span>
+                                  <span>Select Image</span>
                                   <input
                                     type="file"
                                     name={`cards[${index}].cardimg`}
@@ -269,8 +270,8 @@ const CreateFlashCard = ({ theme }) => {
                                   />
                                 </button>
                               )}
-
-                              <div className="flex justify-around w-full md:flex-col md:space-y-5 md:mt-2">
+                              
+                              <div className="flex justify-around w-full md:flex-col md:space-y-5  ">
                                 <button
                                   type="button"
                                   onClick={() => {
@@ -294,7 +295,7 @@ const CreateFlashCard = ({ theme }) => {
                       ))
                       : null}
 
-                    {/* BUTTON TO CREATE SAME GROUP OF INPUTS */}
+
                     <button
                       type="button"
                       onClick={() =>
@@ -331,5 +332,7 @@ const CreateFlashCard = ({ theme }) => {
     </Formik>
   );
 };
+
+
 
 export default CreateFlashCard;
