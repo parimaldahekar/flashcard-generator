@@ -15,7 +15,7 @@ const handlePrint = () => {
   window.print();
 };
 
-const ShowAllCreatedCards = ({ theme }) => {
+const FlashcardDetails = ({ theme }) => {
   const componentRef = useRef();
   const { groupId } = useParams();
   const navigate = useNavigate();
@@ -26,42 +26,53 @@ const ShowAllCreatedCards = ({ theme }) => {
 
 const cards = useSelector((state) => state.flashcard.flashcards);
 const [ourCard, setOurCard] = useState({});
-const [displayCard, setDisplayCard] = useState({});
+const [displayCard, setDisplayCard] = useState(null);
 const [cardIndex, setCardIndex] = useState(0); // add new state for card index
 const cardData = ourCard.cards || [];
 
-const showCard = (id) => {
-  const displaySingleCard = ourCard.cards.filter((a) => a.cardid === id);
-  setDisplayCard(displaySingleCard[0]);
-  setCardIndex(ourCard.cards.findIndex((card) => card.cardid === id)); // update index when showing new card
+ // Function to update the currently displayed card
+ const showCard = (cardid) => {
+  setDisplayCard(ourCard.cards.find((card) => card.cardid === cardid));
 };
 
-const renderCard = (card) => {
-  return (
-    <div className="flex flex-col items-center justify-center">
-      {card.cardimg ? (
-        <img
-          className="object-contain w-[22rem] xl:w-[20vw] h-[18rem] p-6"
-          src={card.cardimg}
-          alt={card.cardimg}
-        />
-      ) : (
-        <img
-          src={TabHands}
-          alt="cardimage"
-          className="object-contain w-[22rem] xl:w-[20vw] h-[18rem] p-6"
-        />
-      )}
-      <p
-        className={`w-full p-6 py-10 word-break: break-all text-${
-          theme === "dark" ? "white" : "slate-600"
-        }`}
-      >
-        {card.carddescription}{" "}
-      </p>
-    </div>
-  );
-};
+  // Function to update the currently displayed card when the user clicks on the carousel arrows
+  const handleCarouselChange = (currentIndex, currentDirection) => {
+    setDisplayCard(cardData[currentIndex]);
+  };
+
+
+    // Filter the cardData array to show only the currently displayed card
+const filteredCardData = displayCard
+    ? cardData.filter((card) => card.cardid === displayCard.cardid)
+    : cardData;
+
+
+    const renderCard = (card, selected) => {
+      return (
+        <div className="flex flex-col items-center justify-center">
+        {card.cardimg ? (
+          <img
+            className="object-contain w-[22rem] xl:w-[20vw] h-[18rem] p-6 "
+            src={card.cardimg}
+            alt={card.cardimg}
+          />
+        ) : (
+          <img
+            src={TabHands}
+            alt="cardimage"
+            className="object-contain w-[22rem] xl:w-[20vw] h-[18rem] p-6"
+          />
+        )}
+        <p
+          className={`w-full p-6 py-10 word-break: break-all text-${
+            theme === "dark" ? "white" : "slate-600"
+          }`}
+        >
+          {card.carddescription}{" "}
+        </p>
+      </div>
+      );
+    };
 
 
 
@@ -73,7 +84,6 @@ useEffect(() => {
 
 useEffect(() => {
   if (ourCard.cards) {
-    setDisplayCard(ourCard.cards[0]);
     setCardIndex(0); // initialize index when loading cards
   }
 }, [ourCard]);
@@ -117,81 +127,78 @@ useEffect(() => {
               ourCard.cards.map((card) => (
                 <p
                   key={card.cardid}
-                  className={`py-3 px-3 word-break: break-all  text-${theme === "dark" ? "white" : "slate-600"
-                    }  bg-${theme === "dark" ? "dark" : "white"
-                    }  font-medium hover:bg-slate-100 cursor-pointer ${card.cardid === displayCard.cardid &&
-                    "!text-red-500 !font-bold"
-                    }`}
+                  className={`py-3 px-3 word-break: break-all  text-${
+                    theme === "dark" ? "white" : "slate-600"
+                  }  bg-${
+                    theme === "dark" ? "dark" : "white"
+                  }  font-medium hover:bg-slate-100 cursor-pointer ${
+                    card.cardid === displayCard?.cardid ? "!text-red-500 !font-bold" : ""
+                  }`}
                   onClick={() => showCard(card.cardid)}
                 >
-                  {" "}
                   {card.cardname}
                 </p>
               ))}
-            <div className="carousel_control">
-            </div>
+          
           </aside>
 
           {/*CARD IMAGE & CARD DESCRIPTION SECTION */}
           <section
-            ref={componentRef}
-            className={`col-span-3 md:col-span-2 md:m-1 flex flex-col xl:flex-row sm:my-5 items-center w-full bg-${theme === "dark" ? "dark" : "white"
-              }  shadow-lg rounded-lg md:flex-col border-2`}
-          >
-          <Carousel
-          additionalTransfrom={0}
-          arrows
-          autoPlaySpeed={3000}
-          centerMode={false}
-          className=""
-          containerClass="container mx-auto"
-          dotListClass=""
-          draggable
-          focusOnSelect={false}
-          infinite
-          itemClass=""
-          keyBoardControl
-          minimumTouchDrag={80}
-          renderButtonGroupOutside={false}
-          renderDotsOutside={false}
-          responsive={{
-            desktop: {
-              breakpoint: {
-                max: 3000,
-                min: 1024,
-              },
-              items: 1,
-              partialVisibilityGutter: 40,
-            },
-            mobile: {
-              breakpoint: {
-                max: 464,
-                min: 0,
-              },
-              items: 1,
-              partialVisibilityGutter: 30,
-            },
-            tablet: {
-              breakpoint: {
-                max: 1024,
-                min: 464,
-              },
-              items: 1,
-              partialVisibilityGutter: 30,
-            },
-          }}
-          showDots={false}
-          sliderClass=""
-          slidesToSlide={1}
-          swipeable
+          ref={componentRef}
+          className={`col-span-3 md:col-span-2 md:m-1 flex flex-col xl:flex-row sm:my-4 items-center w-full bg-${theme === "dark" ? "dark" : "white"} shadow-lg rounded-lg md:flex-col border-2`}
         >
-          {cardData.map((card) => (
-            <div key={card.cardid}>{renderCard(card)}</div>
-          ))}
-        </Carousel>
+        <Carousel
+        additionalTransfrom={0}
+        arrows
+        autoPlaySpeed={3000}
+        centerMode={false}
+        containerClass="container mx-auto"
+        draggable
+        focusOnSelect={false}
+        infinite
+        keyBoardControl
+        minimumTouchDrag={80}
+        renderButtonGroupOutside={false}
+        renderDotsOutside={false}
+        responsive={{
+          desktop: {
+            breakpoint: {
+              max: 3000,
+              min: 1024,
+            },
+            items: 1,
+            partialVisibilityGutter: 40,
+          },
+          tablet: {
+            breakpoint: {
+              max: 1023,
+              min: 768,
+            },
+            items: 1,
+            partialVisibilityGutter: 30,
+          },
+          mobile: {
+            breakpoint: {
+              max: 767,
+              min: 0,
+            },
+            items: 1,
+            partialVisibilityGutter: 30,
+          },
+        }}
+        showDots={false}
+        sliderClass=""
+        slidesToSlide={1}
+        swipeable
+        afterChange={(index) => handleCarouselChange()} 
+      >
+      {filteredCardData.map((card) => (
+        <div key={card.cardid}>{renderCard(card)}</div>
+        ))}
+      </Carousel>
+
+        </section>
         
-           
-          </section>
           {/*BUTTONS PART- SHARE, DOWNLOAD,PRINT */}
           <aside className="col-span-1 md:flex flex-col items-center ">
 
@@ -238,4 +245,4 @@ useEffect(() => {
   );
 };
 
-export default ShowAllCreatedCards;
+export default FlashcardDetails;
