@@ -115,10 +115,10 @@ const CreateFlashCard = ({ theme }) => {
                   onClick={() => {
                     filePicker.current.click();
                   }}
-                  className={`flex items-center px-5 py-2 mt-6 item-center md:ml-1.5 sm:ml-1.5 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}
+                  className={`flex items-center justify-center px-5 py-2 mt-6 item-center md:ml-1.5 sm:ml-1.5 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}
                 >
                 <UploadOutlined className={`flex items-center`} />
-                <span className={`text-sm sm:text-base`}>Upload Image</span>
+                <span className={`text-sm sm:text-base sm:text-center`}>Upload Image</span>
                   <input
                     type="file"
                     ref={filePicker}
@@ -187,7 +187,6 @@ const CreateFlashCard = ({ theme }) => {
                                 type="text"
                                 name={`cards.${index}.cardname`}
                                 innerRef={addRef}
-                                autoFocus
                                 className={`border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-72 bg-gray-50 border  text-gray-900 text-sm `}
                               />{" "}
                               <ErrorMessage

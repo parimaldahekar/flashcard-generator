@@ -11,6 +11,8 @@ import TabHands from "../Assets/hands-tab.jpg";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+
+
 const handlePrint = () => {
   window.print();
 };
@@ -27,7 +29,7 @@ const FlashcardDetails = ({ theme }) => {
 const cards = useSelector((state) => state.flashcard.flashcards);
 const [ourCard, setOurCard] = useState({});
 const [displayCard, setDisplayCard] = useState(null);
-const [cardIndex, setCardIndex] = useState(0); // add new state for card index
+const [, setCardIndex] = useState(0); // add new state for card index
 const cardData = ourCard.cards || [];
 
  // Function to update the currently displayed card
@@ -42,14 +44,18 @@ const cardData = ourCard.cards || [];
 
 
     // Filter the cardData array to show only the currently displayed card
-const filteredCardData = displayCard
+ const filteredCardData = displayCard
     ? cardData.filter((card) => card.cardid === displayCard.cardid)
     : cardData;
 
 
+
+
     const renderCard = (card, selected) => {
       return (
-        <div className="flex flex-col items-center justify-center">
+        <div 
+        ref={componentRef}  
+        className="flex flex-col items-center justify-center">
         {card.cardimg ? (
           <img
             className="object-contain w-[22rem] xl:w-[20vw] h-[18rem] p-6 "
@@ -64,7 +70,7 @@ const filteredCardData = displayCard
           />
         )}
         <p
-          className={`w-full p-6 py-10 word-break: break-all text-${
+          className={`w-full p-6 py-5 word-break: break-all text-${
             theme === "dark" ? "white" : "slate-600"
           }`}
         >
@@ -75,6 +81,7 @@ const filteredCardData = displayCard
     };
 
 
+  
 
 useEffect(() => {
   if (!groupId || !cards) return;
@@ -88,10 +95,13 @@ useEffect(() => {
   }
 }, [ourCard]);
 
+
   return (
     <>
-      <section className="flex flex-col text-slate-700">
-        <header className="flex">
+      <section
+ 
+      className="flex flex-col text-slate-700 ">
+        <header className="flex ">
           <BiArrowBack
             className="text-3xl mr-6 cursor-pointer"
             onClick={() => navigate(-1)}
@@ -113,9 +123,10 @@ useEffect(() => {
             )}
           </div>
         </header>
-        <main className="grid grid-rows-1  md:grid-cols-4 mt-6 mb-10">
+        <main 
+        className="  xl:grid grid-rows-1  md:grid grid-cols-4  mt-6 mb-10 flex sm:flex items-center justify-center flex-col">
           <aside
-            className={`col-span-1 bg-${theme === "dark" ? "dark" : "white"
+            className={`col-span-1 bg-white 
               }  w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-1 py-2 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5  `}
           >
             <h1 className="p-3">Flashcards</h1>
@@ -144,93 +155,96 @@ useEffect(() => {
 
           {/*CARD IMAGE & CARD DESCRIPTION SECTION */}
           <section
-          ref={componentRef}
-          className={`col-span-3 md:col-span-2 md:m-1 flex flex-col xl:flex-row sm:my-4 items-center w-full bg-${theme === "dark" ? "dark" : "white"} shadow-lg rounded-lg md:flex-col border-2`}
+          className={`col-span-2 bg-white  
+        }  w-[20rem] md:w-[20rem] xl:w-[36rem] md:m-5 m-5 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 `}
         >
-        <Carousel
-        additionalTransfrom={0}
-        arrows
-        autoPlaySpeed={3000}
-        centerMode={false}
-        containerClass="container mx-auto"
-        draggable
-        focusOnSelect={false}
-        infinite
-        keyBoardControl
-        minimumTouchDrag={80}
-        renderButtonGroupOutside={false}
-        renderDotsOutside={false}
-        responsive={{
-          desktop: {
-            breakpoint: {
-              max: 3000,
-              min: 1024,
-            },
-            items: 1,
-            partialVisibilityGutter: 40,
-          },
-          tablet: {
-            breakpoint: {
-              max: 1023,
-              min: 768,
-            },
-            items: 1,
-            partialVisibilityGutter: 30,
-          },
-          mobile: {
-            breakpoint: {
-              max: 767,
-              min: 0,
-            },
-            items: 1,
-            partialVisibilityGutter: 30,
-          },
-        }}
-        showDots={false}
-        sliderClass=""
-        slidesToSlide={1}
-        swipeable
-        afterChange={(index) => handleCarouselChange()} 
-      >
-      {filteredCardData.map((card) => (
-        <div key={card.cardid}>{renderCard(card)}</div>
-        ))}
-      </Carousel>
-
+            <Carousel
+              additionalTransfrom={0}
+              arrows
+              autoPlaySpeed={3000}
+              centerMode={false}
+              containerClass="container mx-auto"
+              draggable
+              focusOnSelect={false}
+              infinite
+              keyBoardControl
+              minimumTouchDrag={80}
+              renderButtonGroupOutside={false}
+              renderDotsOutside={false}
+              responsive={{
+                desktop: {
+                  breakpoint: {
+                    max: 3000,
+                    min: 1024,
+                  },
+                  items: 1,
+                  partialVisibilityGutter: 40,
+                },
+                tablet: {
+                  breakpoint: {
+                    max: 1023,
+                    min: 768,
+                  },
+                  items: 1,
+                  partialVisibilityGutter: 30,
+                },
+                mobile: {
+                  breakpoint: {
+                    max: 767,
+                    min: 0,
+                  },
+                  items: 1,
+                  partialVisibilityGutter: 30,
+                },
+              }}
+              showDots={false}
+              sliderClass=""
+              slidesToSlide={1}
+              swipeable
+              afterChange={(index) => handleCarouselChange()} 
+              ref={componentRef}
+            >
+              {filteredCardData.map((card) => (
+                <div key={card.cardid}>{renderCard(card)}</div>
+              ))}
+            </Carousel>
         </section>
         
+        
           {/*BUTTONS PART- SHARE, DOWNLOAD,PRINT */}
-          <aside className="col-span-1 md:flex flex-col items-center ">
+          <aside className="col-span-1 md:flex flex-col items-center justify-centre "  >
 
             <button
               type="button"
               onClick={openModal}
               className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-${theme === "dark" ? "white" : "slate-600"
-                } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-${theme === "dark" ? "dark" : "white"}`}        >
+            } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}        >
               <RiArrowGoBackLine className="scale-x-[-1]" />
-              <span className="hidden xl:block">Share</span>
+              <span className=" xl:block">Share</span>
             </button>
 
-            <ShareModal theme={theme} /> {/*IMPORTED SHARE COMPONENT */}
+
             {/* DOWNLOAD BUTTON*/}
+            
             <button
               className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-${theme === "dark" ? "white" : "slate-600"
-                } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-${theme === "dark" ? "dark" : "white"}`}
-              onClick={handlePrint}
-            >
+                } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}
+                >
               <IoDownloadOutline />
               <span className=" xl:block">Download</span>
             </button>
+
             {/*PRINT BUTTON*/}
+            
             <ReactToPrint
               trigger={() => (
                 <button
                   onClick={handlePrint}
                   className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-${theme === "dark" ? "white" : "slate-600"
-                    } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-${theme === "dark" ? "dark" : "white"}`}
+                } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}
                 >
                   <IoPrintOutline />
-                  <span className=" xl:block  ">Print</span>
+                  <span className=" xl:block ">Print</span>
                 </button>
               )}
               content={() => componentRef.current}

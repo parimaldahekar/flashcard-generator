@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import MySingleFlashCard from "../Components/Carousel/MySingleFlashCard";
+import MySingleFlashCard from "../Components/FlashCardList/FlashCardList";
 
 const MyFlashCard = () => {
   const navigate = useNavigate();
@@ -33,17 +33,19 @@ const MyFlashCard = () => {
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center bg-white shadow-lg p-20">
-          <h1 className="font-semibold text-xl text-slate-500">
-            Nothing to SHOW, Go to{" "}
-            <span
-              className="text-blue-500 cursor-pointer"
-              onClick={() => navigate("/")}
-            >
-              Create Flashcard{" "}
-            </span>
-            to Create New
+        <div>
+        <div className="flex items-center justify-center bg-white shadow-lg p-10">
+          <h1 className="text-center	 font-semibold  text-lg text-slate-500  ">
+          To view a flashcard, please create one.           
           </h1>
+        </div>
+        <div className="flex items-center justify-center bg-white shadow-lg pb-10" >   
+        <button 
+        onClick={() => navigate("/")}
+        class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          Create Flashcard
+        </button>
+        </div>
         </div>
       )}
     </section>
