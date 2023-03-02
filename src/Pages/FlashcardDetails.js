@@ -9,6 +9,8 @@ import ShareModal from "../Components/Share/ShareModal";
 import TabHands from "../Assets/hands-tab.jpg";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 
 
@@ -17,10 +19,22 @@ const handlePrint = () => {
 };
 
 const renderCard = (card) => {
+
+  const downloadPDF = () => {
+    const cardElement = document.getElementById(`card-${card.cardid}`);
+    html2canvas(cardElement).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 10, 10);
+      pdf.save(`card-${card.cardid}.pdf`);
+    });
+  }
+
   return (
     <div
       className="flex flex-col items-center justify-center"
       key={card.cardid}
+      id={`card-${card.cardid}`}
     >
       {card.cardimg ? (
         <img
@@ -38,6 +52,12 @@ const renderCard = (card) => {
       <p className={`w-full p-6 py-5 break-all text-slate-600`}>
         {card.carddescription}
       </p>
+      <button
+      className={`flex items-center md:m-5 mb-4 px-4 py-4 h-fit rounded-md border-2  space-x-5  text-slate-600
+        } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}
+        onClick={downloadPDF} >
+      <IoDownloadOutline  />
+    </button>    
     </div>
   );
 };
@@ -53,7 +73,7 @@ const FlashcardDetails = () => {
   const [ourCard, setOurCard] = useState({});
   const [displayCard, setDisplayCard] = useState(null);
   const [, setCardIndex] = useState(0);
-const cardData = useMemo(() => ourCard.cards || [], [ourCard]);
+  const cardData = useMemo(() => ourCard.cards || [], [ourCard]);
 
   const showCard = useCallback((cardid) => {
     setDisplayCard(ourCard.cards.find((card) => card.cardid === cardid));
@@ -65,6 +85,8 @@ const cardData = useMemo(() => ourCard.cards || [], [ourCard]);
     },
     [cardData]
   );
+
+ 
 
   const filteredCardData = useMemo(
     () =>
@@ -121,8 +143,8 @@ const cardData = useMemo(() => ourCard.cards || [], [ourCard]);
                 <p
                   key={card.cardid}
                   className={`py-3 px-3 word-break: break-all  text-slate-600
-                  }  bg-white
-                  }  font-medium hover:bg-slate-100 cursor-pointer ${
+                    bg-white
+                    font-medium hover:bg-slate-100 cursor-pointer ${
                     card.cardid === displayCard?.cardid ? "!text-red-500 !font-bold" : ""
                   }`}
                   onClick={() => showCard(card.cardid)}
@@ -190,33 +212,23 @@ const cardData = useMemo(() => ourCard.cards || [], [ourCard]);
         </section>
         
         
-          <aside className="col-span-1 md:flex flex-col items-center justify-centre "  >
+          <aside className="col-span-1 md:flex flex-col items-center justify-centre"  >
 
             <button
               type="button"
               onClick={openModal}
-              className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600
-            } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}        >
+              className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[10rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600
+            } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}>
               <RiArrowGoBackLine className="scale-x-[-1]" />
               <span className=" xl:block">Share</span>
             </button>
 
 
-            
-            <button
-              className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600
-                } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}
-                >
-              <IoDownloadOutline />
-              <span className=" xl:block">Download</span>
-            </button>
-
-            
             <ReactToPrint
               trigger={() => (
                 <button
                   onClick={handlePrint}
-                  className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600"
+                  className={`flex w-[60vw] md:w-[10rem] xl:w-[10rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600"
                 } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}
                 >
                   <IoPrintOutline />

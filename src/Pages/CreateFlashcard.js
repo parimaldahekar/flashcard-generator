@@ -9,7 +9,7 @@ import { setFlashCard } from "../State/reducers";
 import { toast } from 'react-toastify'
 import "../App.css";
 
-const CreateFlashCard = ({ theme }) => {
+const CreateFlashCard = () => {
   const dispatch = useDispatch();
   const filePicker = useRef(null);
   const filePickerForCard = useRef(null);
@@ -38,7 +38,6 @@ const CreateFlashCard = ({ theme }) => {
     if (index > 0) setCardImg(values)
   }
   return (
-    //default value of the form input, will after being change as per user input
     <Formik
       initialValues={{
         groupid: nanoid(),
@@ -60,21 +59,18 @@ const CreateFlashCard = ({ theme }) => {
     >
       {({ values, isSubmitting, setFieldValue }) => (
         <Form
-          className={`w-full space-y-5 text-${theme === "dark" ? "white" : "slate-600"
+          className={`w-full space-y-5 text-slate-600
             } font-medium `}
         >
-          {/* GROUP CREATION PART */}
           <div
-            className={`flex flex-col px-10 py-4 bg-${theme === "dark" ? "dark" : "white"
+            className={`flex flex-col px-10 py-4 bg-white
               } shadow-sm shadow-white space-y-4 rounded-md border-2 `}
           >
-            {/* LEFT */}
             <div className={`flex flex-col sm:flex-row  lg:space-x-10 pt-3`}>
               <div className={`flex flex-col relative`}>
               <h2>
               Create Group {"*"}
             </h2>
-                {/*FEATURE TO SHOW THE SELECTED GROUP IMAGE */}
                 {values.groupimg ? (
                   <div className="flex items-center space-x-3  my-5">
                     <div className="w-full min-w-[100px] min-h-[100px] bg-gray-200 max-w-[100px] max-h-[100px]  overflow-hidden  flex rounded-full shadow-md hover:ring-2 hover:-translate-y-1 transition-all ease-in-out duration-300 hover:ring-slate-500 hover:shadow-2xl">
@@ -84,7 +80,6 @@ const CreateFlashCard = ({ theme }) => {
                         alt=""
                       />
                     </div>
-                    {/* ICON TO DELETE THE SELECTED IMAGE */}
                     <label
                       onClick={() => {
                         setFieldValue(`groupimg`, "");
@@ -106,7 +101,7 @@ const CreateFlashCard = ({ theme }) => {
                   className=" text-sm text-red-600"
                   name="groupname"
                 />
-              </div>{/*BUTTON TO UPLOAD IMAGE FOR GROUP */}
+              </div>
               {groupImg ? (
                 ""
               ) : (
@@ -139,7 +134,6 @@ const CreateFlashCard = ({ theme }) => {
               )}
             </div>
 
-            {/* GROUP DESCRIPTION*/}
             <div className="flex flex-col w-full sm:w-[70%]">
               <h2 className="mb-2">Add Description</h2>
               <Field
@@ -157,10 +151,8 @@ const CreateFlashCard = ({ theme }) => {
             </div>
           </div>
 
-          {/* CARDS SECTION  */}
           <div className={`flex flex-col p-1 bg-white 
         } shadow-sm shadow-white space-y-4 rounded-md  `} >
-            {/* FieldArray component from Formik which will create Dynamic Form for the custom input */}
 
             <FieldArray name="cards">
               {(arrayHelper) => {
@@ -182,7 +174,6 @@ const CreateFlashCard = ({ theme }) => {
                                 Enter Term {"*"}
                               
                               </h2>
-                              {/* INPUT FIELD TO CARDS TERM */}
                               <Field
                                 type="text"
                                 name={`cards.${index}.cardname`}
@@ -200,7 +191,6 @@ const CreateFlashCard = ({ theme }) => {
                                 Enter Definition {"*"}
                              
                               </h2>
-                              {/*INPUT FIELD TO CARD DESCRIPTION */}
                               <Field
                                 as="textarea"
                                 name={`cards.${index}.carddescription`}
@@ -213,7 +203,6 @@ const CreateFlashCard = ({ theme }) => {
                               />
                             </div>
 
-                            {/* BUTTON TO SELECT THE IMAGE FOR CARDS */}
 
                             <div className="flex  ">
 
@@ -243,7 +232,7 @@ const CreateFlashCard = ({ theme }) => {
                                     filePickerForCard?.current?.click();
                                   }}
                                   name={`cards[${index}].cardimg`}
-                                  className={` p-1 my-5 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-72  `}
+                                  className={` p-1 md:mt-7 md:h-9 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-72  `}
                                 >
                                   <span>Select Image</span>
                                   <input
