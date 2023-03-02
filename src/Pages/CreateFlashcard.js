@@ -158,7 +158,7 @@ const CreateFlashCard = ({ theme }) => {
           </div>
 
           {/* CARDS SECTION  */}
-          <div className={`flex flex-col p-1 bg-${theme === "dark" ? "dark" : "white"
+          <div className={`flex flex-col p-1 bg-white 
         } shadow-sm shadow-white space-y-4 rounded-md  `} >
             {/* FieldArray component from Formik which will create Dynamic Form for the custom input */}
 
@@ -170,13 +170,13 @@ const CreateFlashCard = ({ theme }) => {
                     {cards && cards.length > 0
                       ? cards.map((card, index) => (
                         <div
-                        className={`flex flex-col px-10 py-3 bg-${theme === "dark" ? "dark" : "white"
+                        className={`flex flex-col px-10 py-3 bg-white
                       } shadow-sm shadow-white space-y-4 rounded-md `}
                         key={index}
                         >
                         
 
-                      <div className={`flex flex-col sm:flex-row  lg:space-x-10 pt-3`}>
+                      <div className={`flex flex-col sm:flex-col md:flex-row lg:space-x-10 pt-3`}>
                       <div className={`flex flex-col relative mb-5`}>
                               <h2>
                                 Enter Term {"*"}
@@ -187,7 +187,7 @@ const CreateFlashCard = ({ theme }) => {
                                 type="text"
                                 name={`cards.${index}.cardname`}
                                 innerRef={addRef}
-                                className={`border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-72 bg-gray-50 border  text-gray-900 text-sm `}
+                                className={`border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-52 md:mr-2 bg-gray-50 border  text-gray-900 text-sm `}
                               />{" "}
                               <ErrorMessage
                                 component={"div"}
@@ -204,7 +204,7 @@ const CreateFlashCard = ({ theme }) => {
                               <Field
                                 as="textarea"
                                 name={`cards.${index}.carddescription`}
-                                className="border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-72   bg-gray-50 border  text-gray-900 text-sm "
+                                className="border-slate-400 h-11 rounded-md p-2 lg:w-72 md:w-52 md:mr-2 bg-gray-50 border  text-gray-900 text-sm "
                               />{" "}
                               <ErrorMessage
                                 component={"div"}
@@ -298,7 +298,6 @@ const CreateFlashCard = ({ theme }) => {
                     <button
                       type="button"
                       onClick={() =>
-                        //  This button will add the new group of inputs to the dynamic form
                         arrayHelper.push({
                           cardid: nanoid(),
                           cardname: "",
@@ -306,7 +305,7 @@ const CreateFlashCard = ({ theme }) => {
                           cardimg: null,
                         })
                       }
-                      className={`flex items-center space-x-2 text-blue-600 font-medium text-sm bg-${theme === "dark" ? "dark" : "white"} mb-5 px-5 py-2 w-30`}
+                      className={`flex items-center space-x-2 text-blue-600 font-medium text-sm bg-white mb-1 px-10 py-2 w-30`}
                     >
                       <PlusOutlined />
                       <span>Add More</span>

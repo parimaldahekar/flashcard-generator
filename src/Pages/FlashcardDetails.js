@@ -155,8 +155,8 @@ useEffect(() => {
 
           {/*CARD IMAGE & CARD DESCRIPTION SECTION */}
           <section
-          className={`col-span-2 bg-white  
-        }  w-[20rem] md:w-[20rem] xl:w-[36rem] md:m-5 m-5 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 `}
+          className={`col-span-2 bg-white  z-0
+        }  w-[20rem] md:w-[20rem] lg:w-[27rem] xl:w-[30rem] 2xl:w-[36rem] md:m-5 m-5 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 `}
         >
             <Carousel
               additionalTransfrom={0}
@@ -251,7 +251,7 @@ useEffect(() => {
             />
           </aside>
         </main>
-        <ShareModal isOpen={isOpen} closeModal={closeModal} />
+        <ShareModal classNamme={`z-1`} isOpen={isOpen} closeModal={closeModal} />
 
       </section>
     

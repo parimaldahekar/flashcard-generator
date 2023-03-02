@@ -30,7 +30,7 @@ const ShareModal = ({ isOpen, closeModal }) => {
   }, [isCopied]);
 
   return (
-    <Modal open={isOpen} onClickBackdrop={closeModal} dataTheme={"light"}>
+    <Modal open={isOpen} onClickBackdrop={closeModal} >
       <Button
         size="sm"
         shape="circle"
@@ -67,40 +67,40 @@ const ShareModal = ({ isOpen, closeModal }) => {
           <h2 className="p-2 h-5 ml-3 text-sm text-red-500 font-semibold">
             {isCopied && "Link copied to clipboard"}
           </h2>
-          <div className="mt-6 flex items-center space-x-10 justify-center">
+          <div className="mt-6 flex items-center space-x-10 justify-center ">
             <FacebookShareButton url="https://www.facebook.com/">
               <img
                 src={Facebook}
                 alt="Facebook"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-20 sm:w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </FacebookShareButton>
             <LinkedinShareButton url="https://www.linkedin.com/">
               <img
                 src={Linkedin}
                 alt="Linkedin"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-20 sm:w-10  p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </LinkedinShareButton>
             <WhatsappShareButton url="https://web.whatsapp.com/">
               <img
                 src={Whatsapp}
                 alt="Whatsapp"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-20 sm:w-7  bg-slate-100 rounded-lg cursor-pointer"
               />
             </WhatsappShareButton>
             <TwitterShareButton url="https://twitter.com/">
               <img
                 src={Twitter}
                 alt="Twitter"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-20 sm:w-10  p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </TwitterShareButton>
             <EmailShareButton url="https://gmail.com/">
               <img
                 src={Mail}
                 alt="Mail"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-20 sm:w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />
             </EmailShareButton>
           </div>
