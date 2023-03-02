@@ -115,7 +115,7 @@ const CreateFlashCard = ({ theme }) => {
                   onClick={() => {
                     filePicker.current.click();
                   }}
-                  className={`flex items-center justify-center px-5 py-2 mt-6 item-center md:ml-1.5 sm:ml-1.5 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}
+                  className={`flex items-center justify-center px-5 py-2 my-3 lg:my-6 item-center md:ml-1.5 sm:ml-1.5 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}
                 >
                 <UploadOutlined className={`flex items-center`} />
                 <span className={`text-sm sm:text-base sm:text-center`}>Upload Image</span>
@@ -215,11 +215,11 @@ const CreateFlashCard = ({ theme }) => {
 
                             {/* BUTTON TO SELECT THE IMAGE FOR CARDS */}
 
-                            <div className="flex items-center  ">
+                            <div className="flex  ">
 
                               {cardImg && cardImg[index] ? (
                                 <div className="md:flex ">
-                                  <div className={`w-full relative min-w-[150px] min-h-[150px]  max-w-[200px] max-h-[150px]  flex hover:border-slate-400 `}>
+                                  <div className={`w-full relative min-w-[150px]   max-w-[200px] max-h-[250px]  flex hover:border-slate-400 `}>
 
                                     <label className="mt-0">
                                       <img
@@ -243,7 +243,7 @@ const CreateFlashCard = ({ theme }) => {
                                     filePickerForCard?.current?.click();
                                   }}
                                   name={`cards[${index}].cardimg`}
-                                  className={` p-1 mt-0 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-72  `}
+                                  className={` p-1 my-5 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-72  `}
                                 >
                                   <span>Select Image</span>
                                   <input
@@ -270,7 +270,7 @@ const CreateFlashCard = ({ theme }) => {
                                 </button>
                               )}
                               
-                              <div className="flex justify-around w-full md:flex-col md:space-y-5  ">
+                              <div className="flex items-centre md:mt-3 lg:mt-4 ml-3  w-full md:flex-col md:space-y-5  ">
                                 <button
                                   type="button"
                                   onClick={() => {
@@ -279,7 +279,7 @@ const CreateFlashCard = ({ theme }) => {
                                   }
                                   }
                                 >
-                                  <TrashIcon className="h-6 text-slate-500" />
+                                  <TrashIcon className="h-6 mr-2 text-slate-500" />
                                 </button>
                                 <button
                                   type="button"
@@ -305,7 +305,7 @@ const CreateFlashCard = ({ theme }) => {
                           cardimg: null,
                         })
                       }
-                      className={`flex items-center space-x-2 text-blue-600 font-medium text-sm bg-white mb-1 px-10 py-2 w-30`}
+                      className={`flex items-center space-x-2 text-blue-600 font-medium text-sm bg-white  px-10 py-2 w-30`}
                     >
                       <PlusOutlined />
                       <span>Add More</span>

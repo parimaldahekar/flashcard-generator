@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback,useMemo  } from "react";
 import { useSelector } from "react-redux";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { IoDownloadOutline, IoPrintOutline } from "react-icons/io5";
@@ -17,105 +16,88 @@ const handlePrint = () => {
   window.print();
 };
 
-const FlashcardDetails = ({ theme }) => {
-  const componentRef = useRef();
+const renderCard = (card) => {
+  return (
+    <div
+      className="flex flex-col items-center justify-center"
+      key={card.cardid}
+    >
+      {card.cardimg ? (
+        <img
+          className="object-contain w-72 xl:w-1/2 h-52 p-6"
+          src={card.cardimg}
+          alt={card.cardimg}
+        />
+      ) : (
+        <img
+          src={TabHands}
+          alt="cardimage"
+          className="object-contain w-72 xl:w-1/2 h-52 p-6"
+        />
+      )}
+      <p className={`w-full p-6 py-5 break-all text-slate-600`}>
+        {card.carddescription}
+      </p>
+    </div>
+  );
+};
+
+const FlashcardDetails = () => {
   const { groupId } = useParams();
+  const componentRef = useRef();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
+  const cards = useSelector((state) => state.flashcard.flashcards);
+  const [ourCard, setOurCard] = useState({});
+  const [displayCard, setDisplayCard] = useState(null);
+  const [, setCardIndex] = useState(0);
+const cardData = useMemo(() => ourCard.cards || [], [ourCard]);
 
+  const showCard = useCallback((cardid) => {
+    setDisplayCard(ourCard.cards.find((card) => card.cardid === cardid));
+  }, [ourCard]);
 
-const cards = useSelector((state) => state.flashcard.flashcards);
-const [ourCard, setOurCard] = useState({});
-const [displayCard, setDisplayCard] = useState(null);
-const [, setCardIndex] = useState(0); // add new state for card index
-const cardData = ourCard.cards || [];
+  const handleCarouselChange = useCallback(
+    (currentIndex) => {
+      setDisplayCard(cardData[currentIndex]);
+    },
+    [cardData]
+  );
 
- // Function to update the currently displayed card
- const showCard = (cardid) => {
-  setDisplayCard(ourCard.cards.find((card) => card.cardid === cardid));
-};
+  const filteredCardData = useMemo(
+    () =>
+      displayCard
+        ? cardData.filter((card) => card.cardid === displayCard.cardid)
+        : cardData,
+    [cardData, displayCard]
+  );
 
-  // Function to update the currently displayed card when the user clicks on the carousel arrows
-  const handleCarouselChange = (currentIndex, currentDirection) => {
-    setDisplayCard(cardData[currentIndex]);
-  };
-
-
-    // Filter the cardData array to show only the currently displayed card
- const filteredCardData = displayCard
-    ? cardData.filter((card) => card.cardid === displayCard.cardid)
-    : cardData;
-
-
-
-
-    const renderCard = (card, selected) => {
-      return (
-        <div 
-        ref={componentRef}  
-        className="flex flex-col items-center justify-center">
-        {card.cardimg ? (
-          <img
-            className="object-contain w-[22rem] xl:w-[20vw] h-[18rem] p-6 "
-            src={card.cardimg}
-            alt={card.cardimg}
-          />
-        ) : (
-          <img
-            src={TabHands}
-            alt="cardimage"
-            className="object-contain w-[22rem] xl:w-[20vw] h-[18rem] p-6"
-          />
-        )}
-        <p
-          className={`w-full p-6 py-5 word-break: break-all text-${
-            theme === "dark" ? "white" : "slate-600"
-          }`}
-        >
-          {card.carddescription}{" "}
-        </p>
-      </div>
-      );
-    };
-
-
-  
-
-useEffect(() => {
-  if (!groupId || !cards) return;
-  const temp = cards.filter((a) => a.card.groupid === groupId);
-  setOurCard(temp[0].card);
-}, [groupId, cards]);
-
-useEffect(() => {
-  if (ourCard.cards) {
-    setCardIndex(0); // initialize index when loading cards
-  }
-}, [ourCard]);
-
+  useEffect(() => {
+    if (!groupId || !cards) return;
+    const temp = cards.filter((a) => a.card.groupid === groupId);
+    setOurCard(temp[0].card);
+    setCardIndex(0);
+  }, [groupId, cards]);
 
   return (
     <>
-      <section
- 
-      className="flex flex-col text-slate-700 ">
-        <header className="flex ">
+      <section className="flex flex-col text-slate-700">
+        <header className="flex">
           <BiArrowBack
             className="text-3xl mr-6 cursor-pointer"
             onClick={() => navigate(-1)}
           />
           <div className="flex flex-col">
             <h2
-              className={`text-xl text-${theme === "dark" ? "white" : "bg-slate-600"
-                } font-bold`}
-            >
+              className={`text-xl font-bold text-bg-slate-600`}
+                >
               {ourCard.groupname}
             </h2>
             {ourCard.groupdescription && (
               <p
-                className={`word-break: break-all my-2  text-${theme === "dark" ? "white" : "bg-slate-600"
+                className={`word-break: break-all my-2  text-bg-slate-600"
                   } `}
               >
                 {ourCard.groupdescription}
@@ -133,15 +115,13 @@ useEffect(() => {
             <hr />
             <hr className="mb-2" />
 
-            {/* CREATING SIDE MENU */}
+
             {ourCard.cards &&
               ourCard.cards.map((card) => (
                 <p
                   key={card.cardid}
-                  className={`py-3 px-3 word-break: break-all  text-${
-                    theme === "dark" ? "white" : "slate-600"
-                  }  bg-${
-                    theme === "dark" ? "dark" : "white"
+                  className={`py-3 px-3 word-break: break-all  text-slate-600
+                  }  bg-white
                   }  font-medium hover:bg-slate-100 cursor-pointer ${
                     card.cardid === displayCard?.cardid ? "!text-red-500 !font-bold" : ""
                   }`}
@@ -153,7 +133,6 @@ useEffect(() => {
           
           </aside>
 
-          {/*CARD IMAGE & CARD DESCRIPTION SECTION */}
           <section
           className={`col-span-2 bg-white  z-0
         }  w-[20rem] md:w-[20rem] lg:w-[27rem] xl:w-[30rem] 2xl:w-[36rem] md:m-5 m-5 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 `}
@@ -161,7 +140,7 @@ useEffect(() => {
             <Carousel
               additionalTransfrom={0}
               arrows
-              autoPlaySpeed={3000}
+              autoPlaySpeed={200}
               centerMode={false}
               containerClass="container mx-auto"
               draggable
@@ -211,36 +190,33 @@ useEffect(() => {
         </section>
         
         
-          {/*BUTTONS PART- SHARE, DOWNLOAD,PRINT */}
           <aside className="col-span-1 md:flex flex-col items-center justify-centre "  >
 
             <button
               type="button"
               onClick={openModal}
-              className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-${theme === "dark" ? "white" : "slate-600"
+              className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600
             } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}        >
               <RiArrowGoBackLine className="scale-x-[-1]" />
               <span className=" xl:block">Share</span>
             </button>
 
 
-            {/* DOWNLOAD BUTTON*/}
             
             <button
-              className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-${theme === "dark" ? "white" : "slate-600"
+              className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600
                 } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}
                 >
               <IoDownloadOutline />
               <span className=" xl:block">Download</span>
             </button>
 
-            {/*PRINT BUTTON*/}
             
             <ReactToPrint
               trigger={() => (
                 <button
                   onClick={handlePrint}
-                  className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-${theme === "dark" ? "white" : "slate-600"
+                  className={`flex items-center w-[60vw] md:w-[10rem] xl:w-[15rem] md:m-5 mr-5 px-4 py-4 h-fit rounded-md border-2 sm:w-[83vw] sm:mx-5 hover:scale-105  mt-2 py-3 px-4 xl:w-60 space-x-5  text-slate-600"
                 } rounded-md shadow-lg  transition-all duration-100 hover:scale-105 border-2 sm:border-none bg-white`}
                 >
                   <IoPrintOutline />
@@ -260,3 +236,4 @@ useEffect(() => {
 };
 
 export default FlashcardDetails;
+
