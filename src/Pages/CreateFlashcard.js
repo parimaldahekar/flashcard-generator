@@ -18,12 +18,13 @@ const CreateFlashCard = () => {
   const [groupImg, setGroupImg] = useState("");
   const [cardImg, setCardImg] = useState([]);
 
+// Function to add a new input element to the inputRef array
   const addRef = (item) => {
     if (item && !inputRef.current.includes(item)) {
       inputRef.current.push(item)
     }
   }
-
+ // Function to add the new flashcard to the store and reset the form and state variables
   const addFlashCard = (values, actions) => {
     dispatch(setFlashCard(values));
     actions.resetForm();
@@ -31,12 +32,13 @@ const CreateFlashCard = () => {
     setCardImg("");
     toast.success("Flashcard created successfully")
   };
-
+  
+  // Function to handle the removal of an image from the cardImg state variable
   const handleImage = (index) => {
     const values = Object.values(cardImg)
-    // const filter = values.splice(index, 1)
     if (index > 0) setCardImg(values)
   }
+
   return (
     <Formik
       initialValues={{
@@ -60,8 +62,9 @@ const CreateFlashCard = () => {
       {({ values, isSubmitting, setFieldValue }) => (
         <Form
           className={`w-full space-y-5 text-slate-600
-            } font-medium `}
-        >
+            } font-medium`}>
+
+        {/* form section to create a group */}
           <div
             className={`flex flex-col px-10 py-4 bg-white
               } shadow-sm shadow-white space-y-4 rounded-md border-2 `}
@@ -71,7 +74,9 @@ const CreateFlashCard = () => {
               <h2>
               Create Group {"*"}
             </h2>
-                {values.groupimg ? (
+
+          {/*FEATURE TO SHOW THE SELECTED GROUP IMAGE */}
+         {values.groupimg ? (
                   <div className="flex items-center space-x-3  my-5">
                     <div className="w-full min-w-[100px] min-h-[100px] bg-gray-200 max-w-[100px] max-h-[100px]  overflow-hidden  flex rounded-full shadow-md hover:ring-2 hover:-translate-y-1 transition-all ease-in-out duration-300 hover:ring-slate-500 hover:shadow-2xl">
                       <img
@@ -80,6 +85,8 @@ const CreateFlashCard = () => {
                         alt=""
                       />
                     </div>
+
+             {/* ICON TO DELETE THE SELECTED IMAGE */}
                     <label
                       onClick={() => {
                         setFieldValue(`groupimg`, "");
@@ -102,6 +109,8 @@ const CreateFlashCard = () => {
                   name="groupname"
                 />
               </div>
+
+           {/*BUTTON TO UPLOAD IMAGE FOR GROUP */}   
               {groupImg ? (
                 ""
               ) : (
@@ -134,6 +143,7 @@ const CreateFlashCard = () => {
               )}
             </div>
 
+           {/* GROUP DESCRIPTION*/}
             <div className="flex flex-col w-full sm:w-[70%]">
               <h2 className="mb-2">Add Description</h2>
               <Field
@@ -151,9 +161,12 @@ const CreateFlashCard = () => {
             </div>
           </div>
 
-          <div className={`flex flex-col p-1 bg-white 
-        } shadow-sm shadow-white space-y-4 rounded-md  `} >
 
+        {/* CARDS SECTION  */}
+          <div className={`flex flex-col p-1 bg-white 
+        } shadow-sm shadow-white space-y-4 rounded-md `} >
+
+            {/* FieldArray component from Formik which will create Dynamic Form for the custom input */}
             <FieldArray name="cards">
               {(arrayHelper) => {
                 const cards = values.cards;
@@ -174,6 +187,8 @@ const CreateFlashCard = () => {
                                 Enter Term {"*"}
                               
                               </h2>
+
+                              {/* INPUT FIELD TO CARDS TERM */}
                               <Field
                                 type="text"
                                 name={`cards.${index}.cardname`}
@@ -191,6 +206,9 @@ const CreateFlashCard = () => {
                                 Enter Definition {"*"}
                              
                               </h2>
+
+                               {/*INPUT FIELD TO CARD DESCRIPTION */}
+
                               <Field
                                 as="textarea"
                                 name={`cards.${index}.carddescription`}
@@ -203,9 +221,8 @@ const CreateFlashCard = () => {
                               />
                             </div>
 
-
-                            <div className="flex  ">
-
+                            {/* BUTTON TO SELECT THE IMAGE FOR CARDS */}
+                            <div className="flex">
                               {cardImg && cardImg[index] ? (
                                 <div className="md:flex ">
                                   <div className={`w-full relative min-w-[150px]   max-w-[200px] max-h-[250px]  flex hover:border-slate-400 `}>
@@ -222,6 +239,7 @@ const CreateFlashCard = () => {
                               ) : (
                                 ""
                               )}
+
                               {cardImg && cardImg[index] ? (
                                 ''
                               ) : (
@@ -232,7 +250,7 @@ const CreateFlashCard = () => {
                                     filePickerForCard?.current?.click();
                                   }}
                                   name={`cards[${index}].cardimg`}
-                                  className={` p-1 md:mt-7 md:h-9 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-72  `}
+                                  className={` p-1 md:mt-7 md:h-9 bg-white border-2 border-blue-600 active:border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 w-auto sm:w-42  `}
                                 >
                                   <span>Select Image</span>
                                   <input
@@ -259,21 +277,19 @@ const CreateFlashCard = () => {
                                 </button>
                               )}
                               
-                              <div className="flex items-centre md:mt-3 lg:mt-4 ml-3  w-full md:flex-col md:space-y-5  ">
+                              <div className="flex items-centre md:mt-3 lg:mt-4 ml-3 w-3 md:flex-col md:space-y-5">
                                 <button
                                   type="button"
                                   onClick={() => {
                                     if (index > 0) arrayHelper.remove(index);
                                     handleImage(index)
-                                  }
-                                  }
-                                >
+                                  } }>
                                   <TrashIcon className="h-6 mr-2 text-slate-500" />
                                 </button>
+
                                 <button
                                   type="button"
-                                  onClick={() => { inputRef.current[index].focus() }}
-                                >
+                                  onClick={() => { inputRef.current[index].focus() }} >
                                   <PencilAltIcon className="h-6 text-blue-600" />
                                 </button>
                               </div>
@@ -283,7 +299,7 @@ const CreateFlashCard = () => {
                       ))
                       : null}
 
-
+                    {/* BUTTON TO CREATE SAME GROUP OF INPUTS */}
                     <button
                       type="button"
                       onClick={() =>

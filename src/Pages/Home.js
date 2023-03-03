@@ -8,8 +8,9 @@ const HomePage = () => {
         Create Flashcard
       </h1>
       <div className="flex items-center space-x-10 mb-3">
+       {/* Button for creating a new flashcard */}
         <button className="text-sm font-semibold text-red-600">
-          {/* Navlink component to sets selected route */}
+          {/* NavLink component to set the selected route */}
           <NavLink
             to={"/"}
             style={({ isActive }) => ({
@@ -21,8 +22,10 @@ const HomePage = () => {
             Create New
           </NavLink>
         </button>
+       
+         {/*Button for viewing the user's flashcards*/}
         <button className="text-sm font-semibold text-red-600">
-          {/* Navlink component to sets selected route */}
+          {/* NavLink component to set the selected route */}
           <NavLink
             to={"/myflashcard"}
             style={({ isActive }) => ({

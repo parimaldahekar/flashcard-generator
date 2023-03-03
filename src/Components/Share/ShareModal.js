@@ -30,7 +30,8 @@ const ShareModal = ({ isOpen, closeModal }) => {
   }, [isCopied]);
 
   return (
-    <Modal open={isOpen} onClickBackdrop={closeModal} >
+    <Modal open={isOpen} onClickBackdrop={closeModal}>
+    
       <Button
         size="sm"
         shape="circle"
@@ -43,8 +44,9 @@ const ShareModal = ({ isOpen, closeModal }) => {
         ✕
       </Button>
       <Modal.Header className="font-bold">Share</Modal.Header>
-
+        
       <Modal.Body>
+      {/* This div contains the link and the copy button */}
         <div className="m-5 flex flex-col">
           <IoMdClose
             onClick={closeModal}
@@ -58,52 +60,68 @@ const ShareModal = ({ isOpen, closeModal }) => {
                 http://www.almabetter.com
               </span>
             </p>
+
+      {/* This component is used to copy the link to clipboard */}
             <CopyToClipboard text={INPUT_LINK} onCopy={() => setIsCopied(true)}>
               <TbCopy className="text-xl text-slate-500 scale-x-[-1] cursor-pointer" />
             </CopyToClipboard>
 
             <BsShare className="text-xl text-slate-500 cursor-pointer" />
           </div>
+
+      {/* This message is displayed when the link has been copied */}
           <h2 className="p-2 h-5 ml-3 text-sm text-red-500 font-semibold">
             {isCopied && "Link copied to clipboard"}
           </h2>
-          <div className="mt-6 flex items-center space-x-10 justify-center ">
-            <FacebookShareButton url="https://www.facebook.com/">
-              <img
-                src={Facebook}
-                alt="Facebook"
-                className="w-20 sm:w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </FacebookShareButton>
-            <LinkedinShareButton url="https://www.linkedin.com/">
-              <img
-                src={Linkedin}
-                alt="Linkedin"
-                className="w-20 sm:w-10  p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </LinkedinShareButton>
-            <WhatsappShareButton url="https://web.whatsapp.com/">
-              <img
-                src={Whatsapp}
-                alt="Whatsapp"
-                className="w-20 sm:w-7  bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </WhatsappShareButton>
-            <TwitterShareButton url="https://twitter.com/">
-              <img
-                src={Twitter}
-                alt="Twitter"
-                className="w-20 sm:w-10  p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </TwitterShareButton>
-            <EmailShareButton url="https://gmail.com/">
-              <img
-                src={Mail}
-                alt="Mail"
-                className="w-20 sm:w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </EmailShareButton>
-          </div>
+
+      {/* This div contains social media share buttons */}
+      <div className="mt-6  flex items-center space-x-10 justify-center ">
+      {/* Facebook Share Button */}
+      <FacebookShareButton url="https://www.facebook.com/">
+        <img
+          src={Facebook}
+          alt="Facebook"
+          className="w-20 sm:w-7  bg-slate-100 rounded-lg cursor-pointer"
+        />
+      </FacebookShareButton>
+    
+      {/* LinkedIn Share Button */}
+      <LinkedinShareButton url="https://www.linkedin.com/">
+        <img
+          src={Linkedin}
+          alt="Linkedin"
+          className="w-20 sm:w-7 bg-slate-100 rounded-lg cursor-pointer"
+        />
+      </LinkedinShareButton>
+    
+      {/* Whatsapp Share Button */}
+      <WhatsappShareButton url="https://web.whatsapp.com/">
+        <img
+          src={Whatsapp}
+          alt="Whatsapp"
+          className="w-20 sm:w-7 bg-slate-100 rounded-lg cursor-pointer"
+        />
+      </WhatsappShareButton>
+    
+      {/* Twitter Share Button */}
+      <TwitterShareButton url="https://twitter.com/">
+        <img
+          src={Twitter}
+          alt="Twitter"
+          className="w-20 sm:w-7  bg-slate-100 rounded-lg cursor-pointer"
+        />
+      </TwitterShareButton>
+    
+      {/* Email Share Button */}
+      <EmailShareButton url="https://gmail.com/">
+        <img
+          src={Mail}
+          alt="Mail"
+          className="w-20 sm:w-7  bg-slate-100 rounded-lg cursor-pointer"
+        />
+      </EmailShareButton>
+    </div>
+    
         </div>
       </Modal.Body>
     </Modal>
