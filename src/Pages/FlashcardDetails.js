@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import React, {useEffect,useState,useRef,useCallback,useMemo} from "react";
 import { useSelector } from "react-redux";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { IoDownloadOutline, IoPrintOutline } from "react-icons/io5";
