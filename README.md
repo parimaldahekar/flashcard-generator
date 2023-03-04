@@ -1,7 +1,7 @@
 <html>
   <body>
     <h1>Flashcard Generator</h1>
-    <p>Hosted Link: <a href="https://ninja-resume.netlify.app/" target="_blank">https://ninja-resume.netlify.app/</a></p>
+    <p>Hosted Link: <a href="https://flashcard-generator-pd.netlify.app/" target="_blank">https://flashcard-generator-pd.netlify.app/</a></p>
     <p align="justify">Welcome to the Flashcard Generator project. The primary aim of this project is to offer learners a productive method for producing and reviewing flashcards, which can significantly improve their capacity to remember fresh material.</p>   
     
    <p align="justify"> By simplifying the flashcard creation process and providing a user-friendly interface, the Flashcard Generator project aims to improve the learning experience for users.To achieve this goal, the project leverages modern web technologies like HTML, Tailwind CSS, React and JavaScript to create an interactive and responsive user interface.</p>
@@ -31,6 +31,10 @@
 <li>Redux: A state management tool used to manage the application's data and ensure a seamless user experience.</li>
 <li>React-icons: It is a library that provides a collection of customizable icons for React applications. </li>
 <li>JSpdf: A library used to download the user's resume in PDF format.</li>
+<li>React-Share: It is a library of social media sharing buttons for React applications. It provides easy-to-use components for sharing content on various social media platforms.</li>
+<li>Toastify: It is a React library that provides a simple and customizable notification system for web applications. It allows developers to display non-intrusive, temporary messages to users.</li>
+<li>DaisyUI: It is a CSS framework for building responsive web interfaces. It provides a set of pre-built UI components, such as buttons, forms, and cards, that can be easily customized to fit the design of the application.</li>
+
 </div>
 </ul>
  <body>

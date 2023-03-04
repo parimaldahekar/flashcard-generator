@@ -30,7 +30,7 @@ const ShareModal = ({ isOpen, closeModal }) => {
   }, [isCopied]);
 
   return (
-    <Modal open={isOpen} onClickBackdrop={closeModal}>
+    <Modal open={isOpen} onClickBackdrop={closeModal} className="bg-white">
     
       <Button
         size="sm"
@@ -63,10 +63,10 @@ const ShareModal = ({ isOpen, closeModal }) => {
 
       {/* This component is used to copy the link to clipboard */}
             <CopyToClipboard text={INPUT_LINK} onCopy={() => setIsCopied(true)}>
-              <TbCopy className="text-xl text-slate-500 scale-x-[-1] cursor-pointer" />
+              <TbCopy className="text-xl text-slate-500 scale-x-[-1] cursor-pointer w-5"/>
             </CopyToClipboard>
 
-            <BsShare className="text-xl text-slate-500 cursor-pointer" />
+            <BsShare className="text-xl text-slate-500 cursor-pointer w-5" />
           </div>
 
       {/* This message is displayed when the link has been copied */}

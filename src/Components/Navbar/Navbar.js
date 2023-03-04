@@ -6,7 +6,7 @@ const Navbar = () => {
     <div>
     {/* Renders a navigation bar */}
 
-    <nav >
+    <nav className="bg-white" >
     <div className="px-5 xl:px-32 container mx-auto">
       <div className="flex items-center justify-between h-16">
         <div className="flex items-center">
