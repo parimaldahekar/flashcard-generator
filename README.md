@@ -30,7 +30,7 @@
 <li>React-router-dom: A library used to implement routing in the application, allowing users to navigate to different pages.</li>
 <li>Redux: A state management tool used to manage the application's data and ensure a seamless user experience.</li>
 <li>React-icons: It is a library that provides a collection of customizable icons for React applications. </li>
-<li>JSpdf: A library used to download the user's resume in PDF format.</li>
+<li>JSpdf: A library used to download the user's flashcard in PDF format.</li>
 <li>React-Share: It is a library of social media sharing buttons for React applications. It provides easy-to-use components for sharing content on various social media platforms.</li>
 <li>Toastify: It is a React library that provides a simple and customizable notification system for web applications. It allows developers to display non-intrusive, temporary messages to users.</li>
 <li>DaisyUI: It is a CSS framework for building responsive web interfaces. It provides a set of pre-built UI components, such as buttons, forms, and cards, that can be easily customized to fit the design of the application.</li>
