@@ -57,7 +57,7 @@ const ShareModal = ({ isOpen, closeModal }) => {
             <p className="flex items-center flex-1 border-2 p-2 text-xs text-slate-500 border-slate-300 rounded-md border-dashed">
               Link:
               <span className="mx-2 font-semibold text-xs overflow-x-hidden text-black">
-                http://www.almabetter.com
+                https://flashcard-generator-pd.netlify.app/
               </span>
             </p>
 

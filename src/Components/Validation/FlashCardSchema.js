@@ -11,7 +11,8 @@ const FlashCardSchema = Yup.object().shape({
 
     // Validates that the "groupdescription" field is a string with a maximum length of 320 characters.
     groupdescription: Yup.string()
-        .max(320, "Must be less than 320 characters"),
+    .max(320, "Must be less than 320 characters")
+    .required('Required'),
 
     // Validates that the "groupimg" field is a mixed type.
     groupimg: Yup.mixed(),
