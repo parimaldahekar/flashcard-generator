@@ -9,7 +9,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* Provides the Store the global states using Provider Component from Redux */}
+    {/* Provides the Store the global states using Provider Component from redux */}
     <Provider store={store}>
       {/* Router component provides the routes to the application */}
       <Router>

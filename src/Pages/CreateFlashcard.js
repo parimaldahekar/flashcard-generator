@@ -6,8 +6,7 @@ import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { PencilAltIcon, TrashIcon } from "@heroicons/react/outline";
 import { useDispatch } from "react-redux";
 import { setFlashCard } from "../State/reducers";
-import { toast } from 'react-toastify'
-import "../App.css";
+import { toast } from "react-toastify";
 
 const CreateFlashCard = () => {
   const dispatch = useDispatch();
@@ -18,26 +17,26 @@ const CreateFlashCard = () => {
   const [groupImg, setGroupImg] = useState("");
   const [cardImg, setCardImg] = useState([]);
 
-// Function to add a new input element to the inputRef array
+  // Function to add a new input element to the inputRef array
   const addRef = (item) => {
     if (item && !inputRef.current.includes(item)) {
-      inputRef.current.push(item)
+      inputRef.current.push(item);
     }
-  }
- // Function to add the new flashcard to the store and reset the form and state variables
+  };
+  // Function to add the new flashcard to the store and reset the form and state variables
   const addFlashCard = (values, actions) => {
     dispatch(setFlashCard(values));
     actions.resetForm();
     setGroupImg("");
     setCardImg("");
-    toast.success("Flashcard created successfully")
+    toast.success("Flashcard created successfully");
   };
-  
+
   // Function to handle the removal of an image from the cardImg state variable
   const handleImage = (index) => {
-    const values = Object.values(cardImg)
-    if (index > 0) setCardImg(values)
-  }
+    const values = Object.values(cardImg);
+    if (index > 0) setCardImg(values);
+  };
 
   return (
     <Formik
@@ -62,21 +61,19 @@ const CreateFlashCard = () => {
       {({ values, isSubmitting, setFieldValue }) => (
         <Form
           className={`w-full space-y-5 text-slate-600
-            } font-medium`}>
-
-        {/* form section to create a group */}
+            } font-medium`}
+        >
+          {/* form section to create a group */}
           <div
             className={`flex flex-col px-10 py-4 bg-white
               } shadow-sm shadow-white space-y-4 rounded-md border-2 `}
           >
             <div className={`flex flex-col sm:flex-row  lg:space-x-10 pt-3`}>
               <div className={`flex flex-col relative`}>
-              <h2>
-              Create Group {"*"}
-            </h2>
+                <h2>Create Group {"*"}</h2>
 
-          {/*FEATURE TO SHOW THE SELECTED GROUP IMAGE */}
-         {values.groupimg ? (
+                {/*FEATURE TO SHOW THE SELECTED GROUP IMAGE */}
+                {values.groupimg ? (
                   <div className="flex items-center space-x-3  my-5">
                     <div className="w-full min-w-[100px] min-h-[100px] bg-gray-200 max-w-[100px] max-h-[100px]  overflow-hidden  flex rounded-full shadow-md hover:ring-2 hover:-translate-y-1 transition-all ease-in-out duration-300 hover:ring-slate-500 hover:shadow-2xl">
                       <img
@@ -86,14 +83,13 @@ const CreateFlashCard = () => {
                       />
                     </div>
 
-             {/* ICON TO DELETE THE SELECTED IMAGE */}
+                    {/* ICON TO DELETE THE SELECTED IMAGE */}
                     <label
                       onClick={() => {
                         setFieldValue(`groupimg`, "");
                         setGroupImg("");
                       }}
-                    >
-                    </label>
+                    ></label>
                   </div>
                 ) : (
                   ""
@@ -110,7 +106,7 @@ const CreateFlashCard = () => {
                 />
               </div>
 
-           {/*BUTTON TO UPLOAD IMAGE FOR GROUP */}   
+              {/*BUTTON TO UPLOAD IMAGE FOR GROUP */}
               {groupImg ? (
                 ""
               ) : (
@@ -119,10 +115,12 @@ const CreateFlashCard = () => {
                   onClick={() => {
                     filePicker.current.click();
                   }}
-                  className={`flex items-center justify-center px-5 py-2 my-3 lg:my-6 item-center md:ml-1.5 sm:ml-1.5 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}
+                  className={`flex items-center justify-center px-5 py-2 my-3 h-10 md:mt-6 lg:my-6 item-center md:ml-2 sm:ml-2 sm:mt-6 bg-white border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2 `}
                 >
-                <UploadOutlined className={`flex items-center`} />
-                <span className={`text-sm sm:text-base sm:text-center`}>Upload Image</span>
+                  <UploadOutlined className={`flex items-center`} />
+                  <span className={`text-sm sm:text-base sm:text-center`}>
+                    Upload Image
+                  </span>
                   <input
                     type="file"
                     ref={filePicker}
@@ -143,7 +141,7 @@ const CreateFlashCard = () => {
               )}
             </div>
 
-           {/* GROUP DESCRIPTION*/}
+            {/* GROUP DESCRIPTION*/}
             <div className="flex flex-col w-full sm:w-[70%]">
               <h2 className="mb-2">Add Description</h2>
               <Field
@@ -161,11 +159,11 @@ const CreateFlashCard = () => {
             </div>
           </div>
 
-
-        {/* CARDS SECTION  */}
-          <div className={`flex flex-col p-1 bg-white 
-        } shadow-sm shadow-white space-y-4 rounded-md `} >
-
+          {/* CARDS SECTION  */}
+          <div
+            className={`flex flex-col p-1 bg-white 
+        } shadow-sm shadow-white space-y-4 rounded-md `}
+          >
             {/* FieldArray component from Formik which will create Dynamic Form for the custom input */}
             <FieldArray name="cards">
               {(arrayHelper) => {
@@ -175,19 +173,15 @@ const CreateFlashCard = () => {
                     {cards && cards.length > 0
                       ? cards.map((card, index) => (
                         <div
-                        className={`flex flex-col px-10 py-3 bg-white
+                          className={`flex flex-col px-10 py-3 bg-white
                       } shadow-sm shadow-white space-y-4 rounded-md `}
-                        key={index}
+                          key={index}
                         >
-                        
-
-                      <div className={`flex flex-col sm:flex-col md:flex-row lg:space-x-10 pt-3`}>
-                      <div className={`flex flex-col relative mb-5`}>
-                              <h2>
-                                Enter Term {"*"}
-                              
-                              </h2>
-
+                          <div
+                            className={`flex flex-col sm:flex-col md:flex-row lg:space-x-10 pt-3`}
+                          >
+                            <div className={`flex flex-col relative mb-5`}>
+                              <h2>Enter Term {"*"}</h2>
                               {/* INPUT FIELD TO CARDS TERM */}
                               <Field
                                 type="text"
@@ -202,13 +196,8 @@ const CreateFlashCard = () => {
                               />
                             </div>
                             <div className={`flex flex-col relative mb-5`}>
-                              <h2>
-                                Enter Definition {"*"}
-                             
-                              </h2>
-
-                               {/*INPUT FIELD TO CARD DESCRIPTION */}
-
+                              <h2>Enter Definition {"*"}</h2>
+                              {/*INPUT FIELD TO CARD DESCRIPTION */}
                               <Field
                                 as="textarea"
                                 name={`cards.${index}.carddescription`}
@@ -225,8 +214,9 @@ const CreateFlashCard = () => {
                             <div className="flex">
                               {cardImg && cardImg[index] ? (
                                 <div className="md:flex ">
-                                  <div className={`w-full relative min-w-[150px]   max-w-[200px] max-h-[250px]  flex hover:border-slate-400 `}>
-
+                                  <div
+                                    className={`w-full relative min-w-[150px]   max-w-[200px] max-h-[250px]  flex hover:border-slate-400 `}
+                                  >
                                     <label className="mt-0">
                                       <img
                                         src={values.cards[index].cardimg}
@@ -241,9 +231,8 @@ const CreateFlashCard = () => {
                               )}
 
                               {cardImg && cardImg[index] ? (
-                                ''
+                                ""
                               ) : (
-                                
                                 <button
                                   type="button"
                                   onClick={() => {
@@ -260,36 +249,40 @@ const CreateFlashCard = () => {
                                     value={cardImg[index]}
                                     onChange={(e) => {
                                       const file1 = e.target.files[0];
-                                      const readerForCardImg = new FileReader();
+                                      const readerForCardImg =
+                                        new FileReader();
                                       readerForCardImg.readAsDataURL(file1);
                                       readerForCardImg.onload = () => {
-                                        setFieldValue(`cards.${index}.cardimg`,
+                                        setFieldValue(
+                                          `cards.${index}.cardimg`,
                                           readerForCardImg.result
-                                        )
+                                        );
                                         setCardImg((prev) => ({
                                           ...prev,
                                           [index]: readerForCardImg.result,
-                                        }))
+                                        }));
                                       };
                                     }}
                                     hidden
                                   />
                                 </button>
                               )}
-                              
+
                               <div className="flex items-centre md:mt-3 lg:mt-4 ml-3 w-3 md:flex-col md:space-y-5">
                                 <button
                                   type="button"
                                   onClick={() => {
                                     if (index > 0) arrayHelper.remove(index);
-                                    handleImage(index)
-                                  } }>
+                                    handleImage(index);
+                                  }}>
                                   <TrashIcon className="h-6 mr-2 text-slate-500" />
                                 </button>
 
                                 <button
                                   type="button"
-                                  onClick={() => { inputRef.current[index].focus() }} >
+                                  onClick={() => {
+                                    inputRef.current[index].focus();
+                                  }}>
                                   <PencilAltIcon className="h-6 text-blue-600" />
                                 </button>
                               </div>
@@ -335,7 +328,5 @@ const CreateFlashCard = () => {
     </Formik>
   );
 };
-
-
 
 export default CreateFlashCard;
