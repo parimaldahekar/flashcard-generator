@@ -4,6 +4,7 @@ import FlashCardSchema from "../Components/Validation/FlashCardSchema";
 import { nanoid } from "nanoid";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { PencilAltIcon, TrashIcon } from "@heroicons/react/outline";
+import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { setFlashCard } from "../State/reducers";
 import { toast } from "react-toastify";
@@ -79,7 +80,7 @@ const CreateFlashCard = () => {
                       <img
                         className="object-cover"
                         src={values.groupimg}
-                        alt=""
+                        alt="groupimg"
                       />
                     </div>
 
@@ -89,11 +90,15 @@ const CreateFlashCard = () => {
                         setFieldValue(`groupimg`, "");
                         setGroupImg("");
                       }}
-                    ></label>
+                    ><button>
+                    <AiOutlineDelete color="#7F8487" size={"1.5rem"} />
+                    </button>
+                    </label>
                   </div>
                 ) : (
                   ""
                 )}
+                
                 <Field
                   type="text"
                   name="groupname"
