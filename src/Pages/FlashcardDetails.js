@@ -6,7 +6,7 @@ import { BiArrowBack } from "react-icons/bi";
 import ReactToPrint from "react-to-print";
 import { useNavigate, useParams } from "react-router-dom";
 import ShareModal from "../Components/Share/ShareModal";
-import TabHands from "../Assets/hands-tab.jpg";
+import defaultImg from "../Assets/default-img.jpg";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import jsPDF from "jspdf";
@@ -47,7 +47,7 @@ const renderCard = (card) => {
         />
       ) : (
         <img
-          src={TabHands}
+          src={defaultImg}
           alt="cardimage"
           className="object-contain w-72 xl:w-1/2 h-52 p-6"
         />

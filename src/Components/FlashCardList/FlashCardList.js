@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import DemoImg from "../../Assets/gray.jpg";
+import DemoImg from "../../Assets/Flashlogo.png";
 
 const FlashCardList = ({ flashcard }) => {
   const navigate = useNavigate();
+
 
   return (
     <div
@@ -20,7 +21,7 @@ const FlashCardList = ({ flashcard }) => {
           />
         ) : (
           <img
-            className="rounded-full w-16 h-16 object-cover aspect-square"
+            className="rounded-full w-16 h-15 object-cover aspect-square"
             src={DemoImg}
             alt={flashcard.groupname}
           />
