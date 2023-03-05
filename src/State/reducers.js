@@ -25,7 +25,6 @@ export const flashcardSlice = createSlice({
 
 export const { setFlashCard } = flashcardSlice.actions;
 
-// export const cardById = (state, groupId) =>
-//   state.flashcard.flashcards.filter((c) => c.groupid === groupId);
+
 
 export default flashcardSlice.reducer;
